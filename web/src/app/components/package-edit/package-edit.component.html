@@ -1,0 +1,31 @@
+<div class="columns">
+	<div class="column is-half is-offset-one-quarter">
+		<div class="card">
+			<typ-loader [active]="loadPkgInProgress" fullscreen="true"></typ-loader>
+			<header class="card-header">
+				<p class="card-header-title">Package</p>
+			</header>
+			<form class="card-content" [formGroup]="packageForm" (ngSubmit)="submit(packageForm.value, packageForm.valid)">
+				<div class="field">
+					<label class="label">Name</label>
+					<div class="control">
+						<input class="input" type="text" placeholder="Name" formControlName="name" />
+					</div>
+				</div>
+				<div class="field">
+					<label class="label">Tracking number</label>
+					<div class="control">
+						<input class="input" type="text" placeholder="Tracking number" formControlName="trackingNumber" />
+					</div>
+				</div>
+				<div class="field">
+					<div class="control">
+						<button  type="submit" class="button is-primary is-fullwidth" [ngClass]="{'is-loading': inProgress}">
+							{{this.packageId ? "Update" : "Create"}}
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,30 @@
+<div class="columns">
+	<div class="column is-half is-offset-one-quarter">
+		<div class="card">
+			<header class="card-header">
+				<p class="card-header-title">Register</p>
+			</header>
+			<form class="card-content" [formGroup]="userForm" (ngSubmit)="register(userForm.value, userForm.valid)">
+				<div class="field">
+					<label class="label">Username</label>
+					<div class="control">
+						<input class="input" type="text" placeholder="Username" formControlName="username" />
+					</div>
+				</div>
+				<div class="field">
+					<label class="label">Password</label>
+					<div class="control">
+						<input class="input" type="password" placeholder="Password" formControlName="password" />
+					</div>
+				</div>
+				<div class="field">
+					<div class="control">
+						<button class="button is-primary is-fullwidth" type="submit" [ngClass]="{'is-loading': inProgress}">
+							Register
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

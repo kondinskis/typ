@@ -1,0 +1,28 @@
+<div class="card">
+	<typ-loader [active]="deleteInProgress" fullscreen="true"></typ-loader>
+	<button class="delete is-medium" (click)="deleteById(pkg.id)"></button>
+	<div class="card-content">
+		<div class="media">
+			<div class="media-content">
+				<p class="title is-4">{{pkg.name}}</p>
+				<p class="subtitle is-6">{{pkg.trackingNumber}}</p>
+			</div>
+		</div>
+		<span class="tag is-danger" *ngIf="error">
+			{{error}}
+		</span>
+		<span class="tag is-info" *ngIf="details && details.length === 0">
+			Package is still in transit.
+		</span>
+		<div class="content" *ngIf="details && details.length > 0">
+			<span *ngFor="let pd of details" class="tag is-primary ml-2">
+				{{pd.end}} <span class="has-text-weight-bold ml-1">({{pd.note}})</span>
+				<time class="is-italic ml-1">{{pd.date | date: 'mediumDate'}}</time>
+			</span>
+		</div>
+	</div>
+	<footer class="card-footer">
+		<a class="card-footer-item button is-white" (click)="getById(pkg.id)" [ngClass]="{'is-loading': detailsInProgress}">Track</a>
+		<a class="card-footer-item button is-white" [routerLink]="['/package', pkg.id]">Edit</a>
+	</footer>
+</div>

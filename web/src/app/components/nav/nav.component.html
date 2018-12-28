@@ -1,0 +1,28 @@
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<div class="navbar-burger burger" [ngClass]="{ 'is-active': collapsedNav }" (click)="collapsedNav = !collapsedNav">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="navbar-menu" [ngClass]="{'is-active': collapsedNav}">
+		<div class="navbar-start">
+
+			<ng-container *ngTemplateOutlet="!!user ? authenticated : unauthenticated"></ng-container>
+
+			<ng-template #authenticated>
+				<a class="navbar-item" routerLink="packages" routerLinkActive="is-active">Packages</a>
+				<a class="navbar-item" routerLink="package" routerLinkActive="is-active">Create</a>
+				<a class="navbar-item" (click)="authService.logout()">Logout</a>
+			</ng-template>
+
+
+			<ng-template #unauthenticated>
+				<a class="navbar-item" routerLink="login" routerLinkActive="is-active">Login</a>
+				<a class="navbar-item" routerLink="register" routerLinkActive="is-active">Register</a>
+			</ng-template>
+
+		</div>
+	</div>
+</nav>
