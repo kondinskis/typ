@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: minikube-ingress
+  annotations:
+spec:
+  rules:
+  - host: typ.app
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: angular
+          servicePort: 8000
+      - path: /api
+        backend:
+          serviceName: flask
+          servicePort: 8000

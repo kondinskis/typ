@@ -5,6 +5,9 @@ load_dotenv()
 
 
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    POSTGRES_USER = os.environ.get('POSTGRES_USER')
+    POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
+    SQLALCHEMY_DATABASE_URI = f'postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@postgres:5432'
+    print(SQLALCHEMY_DATABASE_URI)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ['SECRET_KEY']
