@@ -1,8 +1,8 @@
 [masters]
-master ansible_host=kmaster ansible_user=kmaster
+master ansible_host=kubemaster ansible_user=stefan
 
 [workers]
-worker ansible_host=kworker ansible_user=kworker
+worker ansible_host=kubeworker ansible_user=stefan
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3

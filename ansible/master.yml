@@ -1,11 +1,14 @@
 - hosts: master
   become: true
   tasks:
+    - name: Reset Kubernetes component
+      shell: "kubeadm reset --force"
+      register: reset_cluster
+    
     - name: initialize the cluster
-      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
-      args:
-        chdir: $HOME
-        creates: cluster_initialized.txt
+      when: reset_cluster is succeeded
+      shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+      register: init_cluster
 
     - name: create .kube directory
       become: true
@@ -16,6 +19,7 @@
         mode: 0755
 
     - name: copy admin.conf to user's kube config
+      when: init_cluster is succeeded
       copy:
         src: /etc/kubernetes/admin.conf
         dest: /home/ubuntu/.kube/config
@@ -23,9 +27,22 @@
         owner: ubuntu
 
     - name: install Pod network
+      when: init_cluster is succeeded
       become: true
       become_user: ubuntu
       shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml >> pod_network_setup.txt
       args:
         chdir: $HOME
         creates: pod_network_setup.txt
+
+    - name: install ingress controler
+      when: init_cluster is succeeded
+      become: true
+      become_user: ubuntu
+      shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.27.1/deploy/static/mandatory.yaml >> ingress_controler_setup.txt
+      args:
+        chdir: $HOME
+        creates: ingress_controler_setup.txt
+        
+
+        
