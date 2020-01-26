@@ -1,0 +1,33 @@
+- hosts: master
+  become: true
+  become_user: ubuntu
+  tasks:
+    - name: set up persistent volume
+      shell: kubectl apply -f https://raw.githubusercontent.com/kondinskis/typ/development/kubernetes/persistent-volume.yml >> pv.txt
+      args:
+        chdir: $HOME
+        creates: pv.txt
+
+    - name: set up persistent volume claim
+      shell: kubectl apply -f https://raw.githubusercontent.com/kondinskis/typ/development/kubernetes/persistent-volume-claim.yml >> pvc.txt
+      args:
+        chdir: $HOME
+        creates: pvc.txt
+
+    - name: set up secrets
+      shell: kubectl apply -f https://raw.githubusercontent.com/kondinskis/typ/development/kubernetes/secret.yml >> secret.txt
+      args:
+        chdir: $HOME
+        creates: secret.txt
+
+    - name: set up postgres deployment
+      shell: kubectl apply -f https://raw.githubusercontent.com/kondinskis/typ/development/kubernetes/postgres-deployment.yml >> postgres_deploy.txt
+      args:
+        chdir: $HOME
+        creates: postgres_deploy.txt
+
+    - name: set up postgres service
+      shell: kubectl apply -f https://raw.githubusercontent.com/kondinskis/typ/development/kubernetes/postgres-service.yml >> postgres_svc.txt
+      args:
+        chdir: $HOME
+        creates: postgres_svc.txt

@@ -1,0 +1,15 @@
+- hosts: master
+  become: true
+  become_user: ubuntu
+  tasks:
+    - name: set up typ api deployment
+      shell: kubectl apply -f https://raw.githubusercontent.com/kondinskis/typ/development/kubernetes/flask-deployment.yml >> flask_deploy.txt
+      args:
+        chdir: $HOME
+        creates: flask_deploy.txt
+
+    - name: set up typ api service
+      shell: kubectl apply -f https://raw.githubusercontent.com/kondinskis/typ/development/kubernetes/flask-service.yml >> flask_svc.txt
+      args:
+        chdir: $HOME
+        creates: flask_svc.txt
