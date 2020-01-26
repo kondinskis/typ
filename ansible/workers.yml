@@ -14,8 +14,10 @@
 - hosts: workers
   become: true
   tasks:
+    - name: Reset Kubernetes component
+      shell: "kubeadm reset --force"
+      register: reset_cluster
+
     - name: join cluster
-      shell: "{{ hostvars['master'].join_command }} >> node_joined.txt"
-      args:
-        chdir: $HOME
-        creates: node_joined.txt
+      when: reset_cluster is succeeded
+      shell: "{{ hostvars['master'].join_command }}"

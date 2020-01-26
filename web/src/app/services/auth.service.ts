@@ -8,6 +8,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalStorageUtil } from '../utils/local-storage.util';
 import { Router } from '@angular/router';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -60,11 +62,11 @@ export class AuthService {
 	}
 
 	public login(credentials) {
-		return this.http.post<any>(`http://localhost:5000/api/auth/token`, credentials);
+		return this.http.post<any>(`${environment.apiUrl}/auth/token`, credentials);
 	}
 
 	public register(user) {
-		return this.http.post<any>(`http://localhost:5000/api/auth/register`, user);
+		return this.http.post<any>(`${environment.apiUrl}/auth/register`, user);
 	}
 
 }

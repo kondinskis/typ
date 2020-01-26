@@ -1,0 +1,9 @@
+- hosts: master
+  become: true
+  become_user: ubuntu
+  tasks:
+    - name: set up kuberentes service loadbalancer
+      shell: kubectl apply -f https://raw.githubusercontent.com/kondinskis/typ/development/kubernetes/service-loadbalancer.yml
+
+    - name: set up typ ingress
+      shell: kubectl apply -f https://raw.githubusercontent.com/kondinskis/typ/development/kubernetes/ingress.yml

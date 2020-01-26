@@ -2,7 +2,7 @@
   become: true
   tasks:
     - name: Reset Kubernetes component
-      shell: "kubeadm reset --force"
+      shell: kubeadm reset --force
       register: reset_cluster
     
     - name: initialize the cluster
@@ -30,19 +30,13 @@
       when: init_cluster is succeeded
       become: true
       become_user: ubuntu
-      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml >> pod_network_setup.txt
-      args:
-        chdir: $HOME
-        creates: pod_network_setup.txt
+      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
 
     - name: install ingress controler
       when: init_cluster is succeeded
       become: true
       become_user: ubuntu
-      shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.27.1/deploy/static/mandatory.yaml >> ingress_controler_setup.txt
-      args:
-        chdir: $HOME
-        creates: ingress_controler_setup.txt
+      shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.27.1/deploy/static/mandatory.yaml
         
 
         
