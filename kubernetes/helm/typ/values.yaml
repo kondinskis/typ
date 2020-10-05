@@ -20,3 +20,9 @@ flask:
         name: postgres-credentials
         key: password
     restartPolicy: Always
+  service:
+    name: flask
+    ports:
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
