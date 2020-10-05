@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.flack.deployment.name }}
+  labels:
+    name: {{ .Values.flack.deployment.name }}
+spec:
+  replicas: {{ .Values.flack.deployment.name }}
+  selector:
+    matchLabels:
+      name: {{ .Values.flack.deployment.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.flack.deployment.name }}
+        app: {{ .Values.flack.deployment.name }}
+    spec:
+      containers:
+        - name: {{ .Values.flack.deployment.name }}
+          image: "{{ .Values.flack.deployment.image.repository }}:{{ .Values.flack.deployment.image.tag }}"
+          imagePullPolicy: {{ .Values.flack.deployment.image.pullPolicy }}
+          env:
+        - name: FLASK_ENV
+          value: "{{ .Values.flack.deployment.env.flaskENV }}"
+        - name: APP_SETTINGS
+          value: "{{ .Values.flack.deployment.env.appSettings }}"
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: "{{ .Values.flack.deployment.env.postgresUser.name }}"
+              key: "{{ .Values.flack.deployment.env.postgresUser.key }}"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "{{ .Values.flack.deployment.env.postgresPassword.name }}"
+              key: "{{ .Values.flack.deployment.env.postgresPassword.key }}"
+      restartPolicy: {{ .Values.flack.deployment.restartPolicy }}
