@@ -1,0 +1,22 @@
+# Default values for typ.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+flask:
+  deployment:
+    name: flask
+    replicaCount: 1
+    image:
+      repository: kondinskis/typ-api
+      tag: latest
+      pullPolicy: Always    
+    env:
+      flaskENV: development
+      appSettings: project.config.DevelopmentConfig
+      postgresUser:
+        name: postgres-credentials
+        key: user
+      postgresPassword:
+        name: postgres-credentials
+        key: password
+    restartPolicy: Always
