@@ -26,3 +26,10 @@ flask:
       port: 8080
       targetPort: 8080
       protocol: TCP
+
+secret:
+  name: postgres-credentials
+  type: Opaque
+  data:
+    user: c2FtcGxl
+    password: cGxlYXNlY2hhbmdlbWU=
