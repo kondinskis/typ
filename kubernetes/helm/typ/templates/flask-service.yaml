@@ -7,6 +7,7 @@ metadata:
 spec:
   selector:
     app: {{ .Values.flack.service.name }}
+  type: {{ .Values.flack.service.type }}
   ports:
   - port: {{ .Values.flack.service.ports.port }}
     targetPort: {{ .Values.flack.service.ports.targetPort }}

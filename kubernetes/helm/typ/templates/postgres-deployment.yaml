@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.postgres.deployment.name }}
+  labels:
+    name: {{ .Values.postgres.deployment.labels.name }}
+spec:
+  replicas: {{ .Values.postgres.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.postgres.deployment.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.postgres.deployment.name }}
+        service: {{ .Values.postgres.service.name }}
+    spec:
+      containers:
+      - name: {{ .Values.postgres.deployment.name }}
+        image: "{{ .Values.postgres.deployment.image.repository }}:{{ .Values.postgres.deployment.image.tag }}"
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.postgres.deployment.env.postgresUser.name }}
+                key: {{ .Values.postgres.deployment.env.postgresUser.key }}
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.postgres.deployment.env.postgresPassword.name }}
+                key: {{ .Values.postgres.deployment.env.postgresPassword.key }}
+          - name: POSTGRES_DB
+            value: {{ .Values.postgres.deployment.env.postgresDB.value }}
+        volumeMounts:
+          - name: {{ .Values.postgres.deployment.volume.name }}
+            mountPath: {{ .Values.postgres.deployment.volume.mountPath }}
+      volumes:
+      - name: {{ .Values.postgres.deployment.volumes.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.postgres.deployment.volumes.claimName }}
+      restartPolicy: {{ .Values.postgres.deployment.restartPolicy }}
