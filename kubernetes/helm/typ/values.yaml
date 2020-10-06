@@ -89,3 +89,8 @@ pvc:
   storage: 2Gi
   volumeName: postgres-pv
   storageClassName: standard
+
+ingress:
+  name: typ-ingress
+  serviceName: flask
+  servicePort: 8080
