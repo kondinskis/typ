@@ -43,3 +43,13 @@ pv:
   storage: 2Gi
   storageClassName: standard
   path: /data/postgres-pv
+
+pvc:
+  name: postgres-pvc
+  labels:
+    type: local
+  spec:
+    accessModes: ReadWriteOnce
+  storage: 2Gi
+  volumeName: postgres-pv
+  storageClassName: standard
