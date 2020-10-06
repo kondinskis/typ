@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.loadBalancer.name }}
+  namespace: {{ .Values.loadBalancer.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.loadBalancer.name }}
+    app.kubernetes.io/part-of: {{ .Values.loadBalancer.name }}
+spec:
+  type: {{ .Values.loadBalancer.type }}
+  externalIPs:
+    - {{ .Values.loadBalancer.externalIPs.ip1 }}
+    - {{ .Values.loadBalancer.externalIPs.ip1 }}
+  ports:
+    - name: {{ .Values.loadBalancer.ports.http.name }}
+      port: {{ .Values.loadBalancer.ports.http.port }}
+      targetPort: {{ .Values.loadBalancer.ports.http.targetPort }}
+      protocol: {{ .Values.loadBalancer.ports.http.protocol }}
+    - name: {{ .Values.loadBalancer.ports.https.name }}
+      port: {{ .Values.loadBalancer.ports.https.port }}
+      targetPort: {{ .Values.loadBalancer.ports.https.targetPort }}
+      protocol: {{ .Values.loadBalancer.ports.https.protocol }}
+  selector:
+    app.kubernetes.io/name: {{ .Values.loadBalancer.name }}
+    app.kubernetes.io/part-of: {{ .Values.loadBalancer.name }}
