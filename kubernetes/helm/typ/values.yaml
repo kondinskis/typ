@@ -54,9 +54,13 @@ postgres:
       claimName: postgres-pvc
     restartPolicy: Always
 
-
   service:
     name: postgres
+    type: ClusterIP
+    ports:
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
 
 secret:
   name: postgres-credentials
