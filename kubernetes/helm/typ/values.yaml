@@ -94,3 +94,22 @@ ingress:
   name: typ-ingress
   serviceName: flask
   servicePort: 8080
+
+loadBalancer:
+  name: ingress-nginx
+  namespace: ingress-nginx
+  type: LoadBalancer
+  externalIPs:
+    ip1: 10.0.2.8
+    ip2: 10.0.2.9
+  ports:
+    http:
+      name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    https:
+      name: https
+      port: 443
+      targetPort: 443
+      protocol: TCP
