@@ -33,3 +33,23 @@ secret:
   data:
     user: c2FtcGxl
     password: cGxlYXNlY2hhbmdlbWU=
+
+pv:
+  name: postgres-pv
+  labels:
+    type: local
+  spec:
+    accessModes: ReadWriteOnce
+  storage: 2Gi
+  storageClassName: standard
+  path: /data/postgres-pv
+
+pvc:
+  name: postgres-pvc
+  labels:
+    type: local
+  spec:
+    accessModes: ReadWriteOnce
+  storage: 2Gi
+  volumeName: postgres-pv
+  storageClassName: standard
